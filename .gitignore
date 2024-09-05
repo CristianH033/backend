@@ -1,18 +1,33 @@
-# Created by http://gitignore.io
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 
-### Windows ###
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
 
-# Folder config file
-Desktop.ini
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
-### Linux ###
-.*
-!.gitignore
-!.git*
-*~
+### VS Code ###
+.vscode/
