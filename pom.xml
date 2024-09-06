@@ -29,6 +29,7 @@
 	</scm>
 	<properties>
 		<java.version>22</java.version>
+		<go-offline-maven-plugin.version>1.2.8</go-offline-maven-plugin.version>
 	</properties>
 	<dependencies>
 		<!-- Spring Boot Starter Web -->
@@ -56,11 +57,15 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- Spring Security Test -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- Spring Boot DevTools -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -73,6 +78,11 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>de.qaware.maven</groupId>
+				<artifactId>go-offline-maven-plugin</artifactId>
+				<version>${go-offline-maven-plugin.version}</version>
 			</plugin>
 		</plugins>
 	</build>

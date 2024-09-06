@@ -13,6 +13,6 @@
       ]
     }
   },
-  "remoteUser": "root",
+  "remoteUser": "devuser",
   "forwardPorts": [8080]
 }
