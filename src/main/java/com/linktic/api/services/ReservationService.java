@@ -5,10 +5,13 @@ import com.linktic.api.exceptions.NotFoundException;
 import com.linktic.api.repositories.CustomerRepository;
 import com.linktic.api.repositories.ReservationRepository;
 import com.linktic.api.repositories.ServiceRepository;
+import com.linktic.api.requests.ReservationRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,19 +23,26 @@ public class ReservationService {
     @Autowired
     private ServiceRepository serviceRepository;
 
-    public Reservation createReservation(Reservation reservation) {
-        validateReservation(reservation);
+    public Reservation createReservation(ReservationRequest reservationReq) {
+        validateReservation(reservationReq);
+
+        Reservation reservation = new Reservation();
+        reservation.setCustomer(customerRepository.findById(reservationReq.customer_id).get());
+        reservation.setService(serviceRepository.findById(reservationReq.service_id).get());
+        reservation.setReservationTime(reservationReq.reservation_time);
+        reservation.setStatus(reservationReq.status);
+
         return reservationRepository.save(reservation);
     }
 
-    public Reservation updateReservation(Long id, Reservation reservationDetails) {
+    public Reservation updateReservation(Long id, ReservationRequest reservationDetails) {
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
         validateReservation(reservationDetails);
-        reservation.setCustomer(reservationDetails.getCustomer());
-        reservation.setService(reservationDetails.getService());
-        reservation.setReservationTime(reservationDetails.getReservationTime());
-        reservation.setStatus(reservationDetails.getStatus());
+        reservation.setCustomer(customerRepository.findById(reservationDetails.customer_id).get());
+        reservation.setService(serviceRepository.findById(reservationDetails.service_id).get());
+        reservation.setReservationTime(reservationDetails.reservation_time);
+        reservation.setStatus(reservationDetails.status);
         return reservationRepository.save(reservation);
     }
 
@@ -72,12 +82,17 @@ public class ReservationService {
         }
     }
 
-    private void validateReservation(Reservation reservation) {
-        if (!customerRepository.existsById(reservation.getCustomer().getId())) {
+    private void validateReservation(ReservationRequest reservation) {
+        if (!customerRepository.existsById(reservation.customer_id)) {
             throw new RuntimeException("Customer not found");
         }
-        if (!serviceRepository.existsById(reservation.getService().getId())) {
+        if (!serviceRepository.existsById(reservation.service_id)) {
             throw new RuntimeException("Service not found");
+        }
+
+        if (reservation.reservation_time != null
+                && reservation.reservation_time.isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Reservation time cannot be in the past");
         }
     }
 }

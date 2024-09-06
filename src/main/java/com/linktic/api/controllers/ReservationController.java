@@ -1,6 +1,7 @@
 package com.linktic.api.controllers;
 
 import com.linktic.api.entities.Reservation;
+import com.linktic.api.requests.ReservationRequest;
 import com.linktic.api.services.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,14 +21,15 @@ public class ReservationController {
 
     @PostMapping
     @CrossOrigin(origins = "*")
-    public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
-        return ResponseEntity.ok(reservationService.createReservation(reservation));
+    public ResponseEntity<Reservation> createReservation(@RequestBody ReservationRequest reservationReq) {
+        return ResponseEntity.ok(reservationService.createReservation(reservationReq));
     }
 
     @PutMapping("/{id}")
     @CrossOrigin(origins = "*")
-    public ResponseEntity<Reservation> updateReservation(@PathVariable Long id, @RequestBody Reservation reservation) {
-        return ResponseEntity.ok(reservationService.updateReservation(id, reservation));
+    public ResponseEntity<Reservation> updateReservation(@PathVariable Long id,
+            @RequestBody ReservationRequest reservationReq) {
+        return ResponseEntity.ok(reservationService.updateReservation(id, reservationReq));
     }
 
     @DeleteMapping("/{id}")
