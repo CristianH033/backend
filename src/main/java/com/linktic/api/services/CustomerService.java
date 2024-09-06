@@ -2,10 +2,10 @@ package com.linktic.api.services;
 
 import com.linktic.api.entities.Customer;
 import com.linktic.api.repositories.CustomerRepository;
+import com.linktic.api.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -17,8 +17,7 @@ public class CustomerService {
     }
 
     public Customer updateCustomer(Long id, Customer customerDetails) {
-        Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
+        Customer customer = getCustomerById(id);
         customer.setName(customerDetails.getName());
         customer.setEmail(customerDetails.getEmail());
         customer.setPhone(customerDetails.getPhone());
@@ -29,8 +28,9 @@ public class CustomerService {
         customerRepository.deleteById(id);
     }
 
-    public Optional<Customer> getCustomerById(Long id) {
-        return customerRepository.findById(id);
+    public Customer getCustomerById(Long id) {
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Customer", "id", id));
     }
 
     public List<Customer> getAllCustomers() {

@@ -1,6 +1,7 @@
 package com.linktic.api.services;
 
 import com.linktic.api.entities.Reservation;
+import com.linktic.api.exceptions.NotFoundException;
 import com.linktic.api.repositories.CustomerRepository;
 import com.linktic.api.repositories.ReservationRepository;
 import com.linktic.api.repositories.ServiceRepository;
@@ -43,8 +44,9 @@ public class ReservationService {
         reservationRepository.save(reservation);
     }
 
-    public Optional<Reservation> getReservationById(Long id) {
-        return reservationRepository.findById(id);
+    public Reservation getReservationById(Long id) {
+        return reservationRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Reservation", "id", id));
     }
 
     public List<Reservation> getReservations(LocalDate date, Long serviceId, Long customerId) {

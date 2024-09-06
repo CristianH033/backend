@@ -40,4 +40,9 @@ public class ReservationController {
             @RequestParam(required = false) Long customerId) {
         return ResponseEntity.ok(reservationService.getReservations(date, serviceId, customerId));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Reservation> getReservationById(@PathVariable Long id) {
+        return ResponseEntity.ok(reservationService.getReservationById(id));
+    }
 }

@@ -1,6 +1,7 @@
 package com.linktic.api.services;
 
 import com.linktic.api.entities.Service;
+import com.linktic.api.exceptions.NotFoundException;
 import com.linktic.api.repositories.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,8 +30,9 @@ public class ServiceService {
         serviceRepository.deleteById(id);
     }
 
-    public Optional<Service> getServiceById(Long id) {
-        return serviceRepository.findById(id);
+    public Service getServiceById(Long id) {
+        return serviceRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Service", "id", id));
     }
 
     public List<Service> getAllServices() {
