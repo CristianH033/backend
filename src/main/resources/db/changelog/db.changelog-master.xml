@@ -66,13 +66,18 @@
         </insert>
 
         <insert tableName="services">
-            <column name="name" value="Servicio 1" />
-            <column name="description" value="Descripción del servicio 1" />
+            <column name="name" value="Habitación Sencilla" />
+            <column name="description" value="Habitación sencilla con vista al mar" />
             <column name="capacity" value="10" />
         </insert>
         <insert tableName="services">
-            <column name="name" value="Servicio 2" />
-            <column name="description" value="Descripción del servicio 2" />
+            <column name="name" value="Habitación Doble" />
+            <column name="description" value="Habitación doble con vista al mar" />
+            <column name="capacity" value="20" />
+        </insert>
+        <insert tableName="services">
+            <column name="name" value="Suite premium" />
+            <column name="description" value="Suite premium con vista al mar" />
             <column name="capacity" value="20" />
         </insert>
 
@@ -80,7 +85,7 @@
             <column name="customer_id" value="1" />
             <column name="service_id" value="1" />
             <column name="reservation_time" value="2024-09-10 10:00:00" />
-            <column name="status" value="Pendiente" />
+            <column name="status" value="PENDING" />
         </insert>
     </changeSet>
 
