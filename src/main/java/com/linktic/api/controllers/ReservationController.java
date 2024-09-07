@@ -5,7 +5,6 @@ import com.linktic.api.requests.ReservationRequest;
 import com.linktic.api.services.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +29,13 @@ public class ReservationController {
     public ResponseEntity<Reservation> updateReservation(@PathVariable Long id,
             @RequestBody ReservationRequest reservationReq) {
         return ResponseEntity.ok(reservationService.updateReservation(id, reservationReq));
+    }
+
+    @PatchMapping("/{id}")
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<Reservation> patchReservation(@PathVariable Long id,
+            @RequestBody ReservationRequest reservationReq) {
+        return ResponseEntity.ok(reservationService.patchReservation(id, reservationReq));
     }
 
     @DeleteMapping("/{id}")

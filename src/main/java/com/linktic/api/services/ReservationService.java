@@ -46,6 +46,33 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
+    public Reservation patchReservation(Long id, ReservationRequest reservationDetails) {
+        Reservation reservation = reservationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reservation not found"));
+
+        if (reservationDetails.customer_id != null) {
+            reservation.setCustomer(customerRepository.findById(reservationDetails.customer_id).get());
+        }
+
+        if (reservationDetails.service_id != null) {
+            reservation.setService(serviceRepository.findById(reservationDetails.service_id).get());
+        }
+
+        if (reservationDetails.reservation_time != null) {
+            if (reservationDetails.reservation_time.isBefore(LocalDateTime.now())) {
+                throw new RuntimeException("Reservation time cannot be in the past");
+            }
+
+            reservation.setReservationTime(reservationDetails.reservation_time);
+        }
+
+        if (reservationDetails.status != null) {
+            reservation.setStatus(reservationDetails.status);
+        }
+
+        return reservationRepository.save(reservation);
+    }
+
     public void cancelReservation(Long id) {
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
