@@ -34,8 +34,8 @@ public class ReservationController {
 
     @DeleteMapping("/{id}")
     @CrossOrigin(origins = "*")
-    public ResponseEntity<Void> cancelReservation(@PathVariable Long id) {
-        reservationService.cancelReservation(id);
+    public ResponseEntity<Void> deleteReservation(@PathVariable Long id) {
+        reservationService.deleteReservation(id);
         return ResponseEntity.noContent().build();
     }
 
@@ -52,5 +52,12 @@ public class ReservationController {
     @CrossOrigin(origins = "*")
     public ResponseEntity<Reservation> getReservationById(@PathVariable Long id) {
         return ResponseEntity.ok(reservationService.getReservationById(id));
+    }
+
+    @PostMapping("/{id}/cancel")
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<Void> cancelReservation(@PathVariable Long id) {
+        reservationService.cancelReservation(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -53,6 +53,10 @@ public class ReservationService {
         reservationRepository.save(reservation);
     }
 
+    public void deleteReservation(Long id) {
+        reservationRepository.deleteById(id);
+    }
+
     public Reservation getReservationById(Long id) {
         return reservationRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Reservation", "id", id));
